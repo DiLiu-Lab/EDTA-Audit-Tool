@@ -152,7 +152,7 @@ CNT_TOTAL=0; CNT_FIX=0; CNT_PASS=0; CNT_SKIP=0
 
 if [ $QUIET_MODE -eq 0 ]; then
     log "${CYAN}================================================================${NC}"
-    log "${CYAN}          EDTA QC Audit Tool v1.0 (Species Aware)               ${NC}"
+    log "${CYAN}          EDTA QC Audit Tool v1.0.0 (Species Aware)               ${NC}"
     log "${CYAN}================================================================${NC}"
     log "Standard    : $TYPE_LABEL"
     log "Safety      : Skipping folders ending in '-edta_audit'"
