@@ -23,7 +23,6 @@ The quality control logic relies on lineage-specific genomic characteristics der
 | **LINE Library Size** | > 30 KB | **> 50 KB** | > 1 KB |
 | **Library Integrity** | Strict | Strict | Adaptive (Allows Missing) |
 
-> [!NOTE]
 > **Rationale for Thresholds:**
 > * **Plants:** The 20% lower bound is conservative for angiosperms; values below this significantly deviate from model organisms (e.g., *Arabidopsis thaliana* ~21%; Quesneville 2020) and typically indicate assembly collapse.
 > * **Animals:** Thresholds are adjusted for compact vertebrate genomes (e.g., Avian genomes ~5-10%; Zhang et al. 2014) while strictly enforcing LINE integrity, which is crucial for mammalian genome evolution (Sotero-Caio et al. 2017).
@@ -37,53 +36,70 @@ To ensure the reliability of the QC metrics, we validated EDTA-Audit using both 
 A script (`generate_validation_set.sh`) is provided to generate synthetic datasets representing "Pass" and "Fail" scenarios across three taxonomic kingdoms.
 
 **To reproduce the benchmark:**
+
 ```bash
 # Generate synthetic datasets (C1-C9)
 bash generate_validation_set.sh
 
 # Run Audit in Plant Mode
 ./edta_audit.sh -d validation_dataset -t plant
-# Expected Result: Correctly passes Plant data (C1). Rejects Animal (C4) and Fungi (C9) profiles due to insufficient TE content.
 
-2. Real-World Validation
+# Expected Result: 
+# Correctly passes Plant data (C1). 
+# Rejects Animal (C4) and Fungi (C9) profiles due to insufficient TE content.
+```
+
+### 2. Real-World Validation
 The framework was benchmarked against 13 public plant genome assemblies (NCBI RefSeq). It successfully distinguished high-quality assemblies from those with anomalously low LINE content (<30 KB), demonstrating higher specificity than generic file checks.
 
-Installation
-Requirements
-Linux or macOS
+## Installation
 
-Bash (v4.0+)
+### Requirements
+* Linux or macOS
+* Bash (v4.0+)
+* **No external dependencies**
 
-No external dependencies
-
-Setup
+### Setup
+```bash
 git clone [https://github.com/DiLiu-Lab/EDTA-Audit-Tool.git](https://github.com/DiLiu-Lab/EDTA-Audit-Tool.git)
 cd EDTA-Audit-Tool
 chmod +x edta_audit.sh generate_validation_set.sh
+```
 
-Usage
-Basic Command
+## Usage
+
+### Basic Command
+```bash
 ./edta_audit.sh -d <input_directory> -t <type> [options]
-Parameters
-Flag,Description,Default
--d,Path to input directory (recursive search enabled).,Required
--t,"Organism type. Options: plant, animal, fungi.",other
--o,Output file for FAILED samples.,audit_fail.txt
--p,Output file for PASSED samples.,audit_pass.txt
--m,Move PASSED folders to a specific directory (Data Management).,Disabled
--x,Move FAILED folders to a specific directory (Quarantine).,Disabled
--O,Organize Mode: Aggressively scan and merge scattered file structures.,Disabled
--q,Quiet Mode: Suppress standard terminal output.,Disabled
+```
 
-Example: Workflow Integration
+### Parameters
+
+| Flag | Description | Default |
+| :--- | :--- | :--- |
+| **-d** | Path to input directory (recursive search enabled). | **Required** |
+| **-t** | Organism type. Options: `plant`, `animal`, `fungi`. | `other` |
+| **-o** | Output file for FAILED samples. | `edta_failed_list.txt` |
+| **-p** | Output file for PASSED samples. | `edta_passed_list.txt` |
+| **-m** | Move PASSED folders to a specific directory (Data Management). | Disabled |
+| **-x** | Move FAILED folders to a specific directory (Quarantine). | Disabled |
+| **-O** | **Organize Mode**: Aggressively scan and merge scattered file structures. | Disabled |
+| **-q** | **Quiet Mode**: Suppress standard terminal output. | Disabled |
+
+### Example: Workflow Integration
 Audit a large directory of maize genomes, quarantine failed samples, and log results quietly:
-./edta_audit.sh -d ./raw_data -t plant -x ./Quarantine_Failures -q
 
-License
+```bash
+./edta_audit.sh -d ./raw_data -t plant -x ./Quarantine_Failures -q
+```
+
+## License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-References
-Quesneville, H. Twenty years of transposable element analysis in the Arabidopsis thaliana genome. Mobile DNA 11, 28, doi:10.1186/s13100-020-00223-x (2020).
-Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. Evolution and Diversity of Transposable Elements in Vertebrate Genomes. Genome Biology and Evolution 9, 161-177, doi:10.1093/gbe/evw264 (2017).
-Castanera, R. et al. Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles. PLOS Genetics 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
-Zhang, G. et al. Comparative genomics reveals insights into avian genome evolution and adaptation. Science 346, 1311-1320, doi:10.1126/science.1251385 (2014).
+## References
+
+1. Quesneville, H. **Twenty years of transposable element analysis in the Arabidopsis thaliana genome.** *Mobile DNA* 11, 28, doi:10.1186/s13100-020-00223-x (2020).
+2. Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. **Evolution and Diversity of Transposable Elements in Vertebrate Genomes.** *Genome Biology and Evolution* 9, 161-177, doi:10.1093/gbe/evw264 (2017).
+3. Castanera, R. et al. **Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles.** *PLOS Genetics* 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
+4. Zhang, G. et al. **Comparative genomics reveals insights into avian genome evolution and adaptation.** *Science* 346, 1311-1320, doi:10.1126/science.1251385 (2014).
