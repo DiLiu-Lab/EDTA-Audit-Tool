@@ -28,6 +28,40 @@ The quality control logic relies on lineage-specific genomic characteristics der
 > * **Animals:** Thresholds are adjusted for compact vertebrate genomes (e.g., Avian genomes ~5-10%; Zhang et al. 2014) while strictly enforcing LINE integrity, which is crucial for mammalian genome evolution (Sotero-Caio et al. 2017).
 > * **Fungi:** Adaptive logic tolerates the natural absence of specific superfamilies (e.g., SINEs) as documented in fungal genomics (Castanera et al. 2016).
 
+### Logic Workflow
+
+```mermaid
+graph LR
+    Input[EDTA Results] --> Check{Species?}
+    
+    %% Plant Path
+    Check -- plant --> Plant[🌱 Plant Mode]
+    Plant --> P_Check{Thresholds}
+    P_Check -- "TE<20% / LTR<500KB" --> Fail_P[❌ Fail]
+    P_Check -- "Metrics OK" --> Pass_P[✅ Pass]
+    
+    %% Animal Path
+    Check -- animal --> Animal[🐅 Animal Mode]
+    Animal --> A_Check{Thresholds}
+    A_Check -- "TE<5% / No LINEs" --> Fail_A[❌ Fail]
+    A_Check -- "Metrics OK" --> Pass_A[✅ Pass]
+    
+    %% Fungi Path
+    Check -- fungi --> Fungi[🍄 Fungi Mode]
+    Fungi --> F_Check{Thresholds}
+    F_Check -- "TE<1%" --> Fail_F[❌ Fail]
+    F_Check -- "SINEs Optional" --> Pass_F[✅ Pass]
+
+    %% Styles
+    style Fail_P fill:#ffe6e6,stroke:#ff0000,stroke-width:1px
+    style Fail_A fill:#ffe6e6,stroke:#ff0000,stroke-width:1px
+    style Fail_F fill:#ffe6e6,stroke:#ff0000,stroke-width:1px
+    
+    style Pass_P fill:#e6ffe6,stroke:#00aa00,stroke-width:1px
+    style Pass_A fill:#e6ffe6,stroke:#00aa00,stroke-width:1px
+    style Pass_F fill:#e6ffe6,stroke:#00aa00,stroke-width:1px
+```
+
 ## Validation and Reproducibility
 
 To ensure the reliability of the QC metrics, we validated EDTA-Audit using both synthetic datasets and real-world genomes.
@@ -103,3 +137,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 2. Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. **Evolution and Diversity of Transposable Elements in Vertebrate Genomes.** *Genome Biology and Evolution* 9, 161-177, doi:10.1093/gbe/evw264 (2017).
 3. Castanera, R. et al. **Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles.** *PLOS Genetics* 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
 4. Zhang, G. et al. **Comparative genomics reveals insights into avian genome evolution and adaptation.** *Science* 346, 1311-1320, doi:10.1126/science.1251385 (2014).
+
