@@ -1,0 +1,101 @@
+name: Full Feature Demo (3 Scenarios)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  run-comprehensive-demo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: 🛠️ Setup Environment
+      run: |
+        chmod +x edta_audit.sh
+        echo "Script made executable."
+
+    # ========================================================
+    # 场景 1: 默认模式 (不做整理，面对散乱文件应报错)
+    # ========================================================
+    - name: 🧪 Scenario 1: Default Usage (Expect Fail on Messy Data)
+      run: |
+        echo "----------------------------------------------------"
+        echo "Creating Messy Dataset #1 (Scattered files)..."
+        mkdir -p Data_Scen1/Maize_Sample
+        
+        # 制造散乱文件 (Loose Files) - 在样本文件夹外
+        echo "  Total TE: 45.00%" > Data_Scen1/Maize_Sample.TEanno.sum
+        mkdir -p Data_Scen1/Maize_Sample.mod.EDTA.raw
+        truncate -s 600K Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.LTR.raw.fa
+        truncate -s 200K Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.TIR.intact.raw.fa
+        truncate -s 100K Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.LINE.raw.fa
+        truncate -s 100K Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.Helitron.intact.raw.fa
+        truncate -s 1K   Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.SINE.raw.fa
+        
+        echo ">>> Running Command: ./edta_audit.sh -d Data_Scen1 -t plant"
+        echo ">>> Expectation: ERROR (Because files are scattered and -O is OFF)"
+        
+        # 加上 || true 防止报错导致整个流程中断，让我们能继续看后面的演示
+        ./edta_audit.sh -d Data_Scen1 -t plant || true
+
+    # ========================================================
+    # 场景 2: 整理模式 (加 -O，自动修复散乱文件并运行)
+    # ========================================================
+    - name: ✨ Scenario 2: With -O Flag (Auto-Organize & Pass)
+      run: |
+        echo "----------------------------------------------------"
+        echo "Creating Messy Dataset #2 (Same mess as above)..."
+        mkdir -p Data_Scen2/Rice_Sample
+        
+        # 同样的散乱结构
+        echo "  Total TE: 35.00%" > Data_Scen2/Rice_Sample.TEanno.sum
+        mkdir -p Data_Scen2/Rice_Sample.mod.EDTA.raw
+        truncate -s 600K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.LTR.raw.fa
+        truncate -s 200K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.TIR.intact.raw.fa
+        truncate -s 100K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.LINE.raw.fa
+        truncate -s 100K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.Helitron.intact.raw.fa
+        truncate -s 1K   Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.SINE.raw.fa
+
+        echo ">>> Running Command: ./edta_audit.sh -d Data_Scen2 -t plant -O"
+        echo ">>> Expectation: SUCCESS (Files moved to folder, then Audit Pass)"
+        
+        ./edta_audit.sh -d Data_Scen2 -t plant -O
+
+    # ========================================================
+    # 场景 3: 综合管理模式 (加 -O -m -x，整理+分类移动)
+    # ========================================================
+    - name: 📦 Scenario 3: Full Options (-O -m -x) (Sort Results)
+      run: |
+        echo "----------------------------------------------------"
+        echo "Creating Mixed Dataset #3 (One Good, One Bad)..."
+        mkdir -p Data_Scen3
+        
+        # 样本 A: 好数据 (散乱，需要 -O 整理，且数据达标)
+        mkdir -p Data_Scen3/Good_Sample
+        echo "  Total TE: 55.00%" > Data_Scen3/Good_Sample.TEanno.sum
+        mkdir -p Data_Scen3/Good_Sample.mod.EDTA.raw
+        truncate -s 800K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.LTR.raw.fa
+        truncate -s 100K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.LINE.raw.fa
+        truncate -s 100K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.Helitron.intact.raw.fa
+        truncate -s 200K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.TIR.intact.raw.fa
+        truncate -s 1K   Data_Scen3/Good_Sample.mod.EDTA.raw/Good.SINE.raw.fa
+
+        # 样本 B: 坏数据 (数据完整，但 TE 含量太低，应被移动到 Fail 文件夹)
+        mkdir -p Data_Scen3/Bad_Sample
+        # TE 只有 2%，低于植物要求的 20%
+        echo "  Total TE: 2.00%" > Data_Scen3/Bad_Sample/Bad.TEanno.sum 
+        mkdir -p Data_Scen3/Bad_Sample/Bad.mod.EDTA.raw
+        # 甚至连 raw data 都是空的
+        touch Data_Scen3/Bad_Sample/Bad.mod.EDTA.raw/empty.fa 
+
+        echo ">>> Running Command: ./edta_audit.sh -d Data_Scen3 -t plant -O -m Final_Pass -x Final_Fail"
+        echo ">>> Expectation: 'Good_Sample' moves to Final_Pass; 'Bad_Sample' moves to Final_Fail"
+        
+        ./edta_audit.sh -d Data_Scen3 -t plant -O -m Final_Pass -x Final_Fail
+
+        echo -e "\nChecking Results Directory Structure:"
+        ls -R Final_Pass
+        ls -R Final_Fail
