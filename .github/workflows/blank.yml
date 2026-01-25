@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # 1. 彻底清洗 Windows 格式 (安装 dos2unix 是最保险的)
+    # 1. 彻底清洗 Windows 格式 (使用 dos2unix 是最保险的)
     - name: 🧼 Fix Windows Line Endings
       run: |
         sudo apt-get update
@@ -27,8 +27,8 @@ jobs:
         echo "----------------------------------------------------"
         mkdir -p Data_Scen1/Maize_Genomic
         
-        # [故意制造] 一个不符合脚本命名规范的文件，或者散乱的文件
-        # 这里虽然有内容，但因为没有开 -O，脚本找不到它，所以预期报错
+        # [故意制造] 散落在外的文件
+        # 文件名虽然规范，但因为我们故意不加 -O 参数，脚本不会去整理它，所以预期会报错
         echo "  Total TE: 45.00%" > Data_Scen1/Maize_Genomic.fna.mod.EDTA.TEanno.sum
         
         echo ">>> Running Command (Expect Error)..."
@@ -42,8 +42,8 @@ jobs:
         # 创建主文件夹: Rice_Genomic
         mkdir -p Data_Scen2/Rice_Genomic
         
-        # [关键修正] 文件名必须包含 .EDTA. 才能被您的脚本识别！
-        # 您的脚本逻辑：parent_guess="${basename_item%%.fna*}" -> 得到 Rice_Genomic
+        # [关键修正] 文件名必须包含 .EDTA. 才能被您的脚本 find 命令识别！
+        # 您的脚本逻辑：basename%%.fna* -> 得到 Rice_Genomic -> 成功匹配文件夹
         echo "  Total TE: 35.00%" > Data_Scen2/Rice_Genomic.fna.mod.EDTA.TEanno.sum
         
         # 创建散乱的 raw 文件夹 (名字也必须包含 .EDTA.)
@@ -74,7 +74,7 @@ jobs:
 
         # --- 样本 B (Bad) ---
         mkdir -p Data_Scen3/Bad_Genomic
-        # TE 含量太低 (2%)，直接放入文件夹，确保它是因数值低而 Fail
+        # TE 含量太低 (2%)，直接放入文件夹，确保它是因数值低而 Fail，而不是因文件缺失
         echo "  Total TE: 2.00%" > Data_Scen3/Bad_Genomic/Bad_Genomic.TEanno.sum 
         
         echo ">>> Running Command with -m -x..."
@@ -83,6 +83,7 @@ jobs:
         echo "----------------------------------------------------"
         echo "Checking Results..."
         
+        # 验证结果文件夹是否存在
         if [ -d "Final_Pass-edta_audit" ]; then 
              echo "✅ Found Pass Directory"
              ls -F Final_Pass-edta_audit/
