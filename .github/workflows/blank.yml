@@ -1,4 +1,4 @@
-name: Full Feature Demo (3 Scenarios)
+name: Full Feature Demo (Corrected)
 
 on:
   push:
@@ -12,19 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # === 关键修复步骤 ===
+    # [关键修复 1] 清洗 Windows 格式并赋予权限
     - name: 🧼 Fix Windows Line Endings
       run: |
-        # 使用 sed 命令强制删除 Windows 的 \r 字符
         sed -i 's/\r$//' edta_audit.sh
-        # 赋予执行权限
         chmod +x edta_audit.sh
         echo "✅ Script cleaned and executable."
 
-    # ========================================================
-    # 场景 1: 默认模式 (预期报错，但我们会用 || true 让它显示为通过)
-    # ========================================================
-    - name: 🧪 Scenario 1: Default Usage (Expect Fail on Messy Data)
+    # 场景 1: 默认模式 (预期报错，我们用 || true 让它显示通过)
+    - name: 🧪 Scenario 1: Default Usage (Expect Fail)
       run: |
         echo "----------------------------------------------------"
         mkdir -p Data_Scen1/Maize_Sample
@@ -32,16 +28,11 @@ jobs:
         mkdir -p Data_Scen1/Maize_Sample.mod.EDTA.raw
         truncate -s 600K Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.LTR.raw.fa
         
-        echo ">>> Running Command: ./edta_audit.sh (Expect Error)"
-        
-        # 这里的 || true 是关键！它告诉 GitHub：
-        # "就算这一步报错了，也算你成功"，这样流程就不会变红了。
+        echo ">>> Running Command (Expect Error due to messy files)..."
         ./edta_audit.sh -d Data_Scen1 -t plant || true
 
-    # ========================================================
     # 场景 2: 整理模式 (加 -O)
-    # ========================================================
-    - name: ✨ Scenario 2: With -O Flag (Auto-Organize & Pass)
+    - name: ✨ Scenario 2: With -O Flag (Auto-Organize)
       run: |
         echo "----------------------------------------------------"
         mkdir -p Data_Scen2/Rice_Sample
@@ -53,27 +44,33 @@ jobs:
         truncate -s 200K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.TIR.intact.raw.fa
         truncate -s 1K   Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.SINE.raw.fa
 
-        echo ">>> Running Command with -O"
+        echo ">>> Running Command with -O..."
         ./edta_audit.sh -d Data_Scen2 -t plant -O
 
-    # ========================================================
     # 场景 3: 综合管理模式 (-O -m -x)
-    # ========================================================
     - name: 📦 Scenario 3: Full Options (Sort Results)
       run: |
         echo "----------------------------------------------------"
+        # 准备好样本 (Good)
         mkdir -p Data_Scen3/Good_Sample
         echo "  Total TE: 55.00%" > Data_Scen3/Good_Sample.TEanno.sum
         mkdir -p Data_Scen3/Good_Sample.mod.EDTA.raw
         truncate -s 800K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.LTR.raw.fa
         truncate -s 100K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.LINE.raw.fa
-        
+        truncate -s 100K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.Helitron.intact.raw.fa
+        truncate -s 200K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.TIR.intact.raw.fa
+        truncate -s 1K   Data_Scen3/Good_Sample.mod.EDTA.raw/Good.SINE.raw.fa
+
+        # 准备坏样本 (Bad)
         mkdir -p Data_Scen3/Bad_Sample
         echo "  Total TE: 2.00%" > Data_Scen3/Bad_Sample/Bad.TEanno.sum 
         
-        echo ">>> Running Command with -m -x"
+        echo ">>> Running Command with -m -x..."
         ./edta_audit.sh -d Data_Scen3 -t plant -O -m Final_Pass -x Final_Fail
 
-        echo "Checking Results:"
-        ls -F Final_Pass/
-        ls -F Final_Fail/
+        echo "----------------------------------------------------"
+        echo "Checking Results (Looking for folders with -edta_audit suffix)..."
+        
+        # [关键修复 2] 这里加上了 -edta_audit 后缀，这样 ls 就不会报错了！
+        ls -F Final_Pass-edta_audit/
+        ls -F Final_Fail-edta_audit/
