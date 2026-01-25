@@ -5,7 +5,7 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   demo-basic-usage:
@@ -16,16 +16,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      - name: Verify script exists
+        run: |
+          ls -la
+          if [ ! -f "edta_audit.sh" ]; then
+            echo "ERROR: edta_audit.sh not found!"
+            exit 1
+          fi
+      
       - name: Setup test environment
         run: |
-          mkdir -p test_data/sample1
-          mkdir -p test_data/sample2
-          # Create scattered files (simulating messy EDTA output)
-          touch test_data/sample1.mod.EDTA.raw/sample1.LTR.raw.fa
-          touch test_data/sample1.mod.EDTA.raw/sample1.TIR.intact.raw.fa
-          touch test_data/GC1_sample1.mod
+          # Create proper directory structure for one good sample
+          mkdir -p test_data/sample1/sample1.mod.EDTA.raw
+          
+          # Create library files with proper sizes
+          dd if=/dev/zero of=test_data/sample1/sample1.mod.EDTA.raw/sample1.LTR.raw.fa bs=1K count=600
+          dd if=/dev/zero of=test_data/sample1/sample1.mod.EDTA.raw/sample1.TIR.intact.raw.fa bs=1K count=120
+          dd if=/dev/zero of=test_data/sample1/sample1.mod.EDTA.raw/sample1.LINE.raw.fa bs=1K count=40
+          dd if=/dev/zero of=test_data/sample1/sample1.mod.EDTA.raw/sample1.Helitron.intact.raw.fa bs=1K count=60
+          dd if=/dev/zero of=test_data/sample1/sample1.mod.EDTA.raw/sample1.SINE.raw.fa bs=1 count=600
+          
+          # Create summary and log
           echo "Total TE: 25.5%" > test_data/sample1/sample1.TEanno.sum
-          echo "EDTA run" > test_data/sample1/run.log
+          echo "EDTA run complete" > test_data/sample1/run.log
+          
+          # Create scattered files (should cause errors in basic mode)
+          mkdir -p test_data/sample2.mod.EDTA.raw
+          dd if=/dev/zero of=test_data/sample2.mod.EDTA.raw/sample2.LTR.raw.fa bs=1K count=600
+          echo "Total TE: 22.0%" > test_data/sample2.TEanno.sum
+          
+          echo "Test data structure:"
+          ls -lR test_data/
       
       - name: Make script executable
         run: chmod +x edta_audit.sh
@@ -33,21 +54,27 @@ jobs:
       - name: Run EDTA Audit - Basic Mode
         run: |
           echo "=========================================="
-          echo "DEMO 1: Basic Usage (Will report errors for scattered files)"
+          echo "DEMO 1: Basic Usage (No -O flag)"
+          echo "Expects: sample1 PASS, sample2 FAIL (scattered files)"
           echo "=========================================="
-          ./edta_audit.sh -d test_data -t plant
-        continue-on-error: true
+          ./edta_audit.sh -d test_data -t plant || echo "Script completed with errors (expected for scattered files)"
       
       - name: Display results
         run: |
-          echo "Failed samples:"
-          cat edta_failed_list.txt || echo "No failed list generated"
           echo ""
-          echo "Passed samples:"
-          cat edta_passed_list.txt || echo "No passed list generated"
+          echo "=========================================="
+          echo "FAILED SAMPLES (with reasons):"
+          echo "=========================================="
+          cat edta_failed_list.txt 2>/dev/null || echo "No failed list generated"
+          echo ""
+          echo "=========================================="
+          echo "PASSED SAMPLES:"
+          echo "=========================================="
+          cat edta_passed_list.txt 2>/dev/null || echo "No passed list generated"
       
       - name: Upload results
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: demo1-results
           path: |
@@ -64,11 +91,10 @@ jobs:
       
       - name: Setup test environment with scattered files
         run: |
-          # Create main sample directories
+          # Create main sample directory
           mkdir -p test_data/genome1
-          mkdir -p test_data/genome2
           
-          # Create scattered EDTA output files/dirs (simulating real messy output)
+          # Create scattered EDTA output directory (outside main dir)
           mkdir -p test_data/genome1.mod.EDTA.raw
           dd if=/dev/zero of=test_data/genome1.mod.EDTA.raw/genome1.LTR.raw.fa bs=1K count=600
           dd if=/dev/zero of=test_data/genome1.mod.EDTA.raw/genome1.TIR.intact.raw.fa bs=1K count=120
@@ -76,12 +102,15 @@ jobs:
           dd if=/dev/zero of=test_data/genome1.mod.EDTA.raw/genome1.Helitron.intact.raw.fa bs=1K count=60
           dd if=/dev/zero of=test_data/genome1.mod.EDTA.raw/genome1.SINE.raw.fa bs=1 count=600
           
-          # Create summary file
+          # Create scattered summary file
           echo "Total TE: 25.5%" > test_data/genome1.TEanno.sum
+          
+          # Create log in proper directory
           echo "EDTA analysis complete" > test_data/genome1/run.log
           
-          # Show directory structure before organization
+          echo "=========================================="
           echo "Directory structure BEFORE organization:"
+          echo "=========================================="
           ls -lR test_data/
       
       - name: Make script executable
@@ -89,29 +118,37 @@ jobs:
       
       - name: Run EDTA Audit - With Organization
         run: |
+          echo ""
           echo "=========================================="
           echo "DEMO 2: With Organization (-O flag)"
-          echo "This will merge scattered files into proper directories"
+          echo "This will merge scattered files into genome1/"
           echo "=========================================="
           ./edta_audit.sh -d test_data -t plant -O
       
       - name: Show organized structure
         run: |
           echo ""
+          echo "=========================================="
           echo "Directory structure AFTER organization:"
+          echo "=========================================="
           ls -lR test_data/
       
       - name: Display results
         run: |
           echo ""
-          echo "Failed samples:"
-          cat edta_failed_list.txt || echo "No failures"
+          echo "=========================================="
+          echo "FAILED SAMPLES:"
+          echo "=========================================="
+          cat edta_failed_list.txt 2>/dev/null || echo "None"
           echo ""
-          echo "Passed samples:"
-          cat edta_passed_list.txt || echo "No passes"
+          echo "=========================================="
+          echo "PASSED SAMPLES:"
+          echo "=========================================="
+          cat edta_passed_list.txt 2>/dev/null || echo "None"
       
       - name: Upload results
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: demo2-results
           path: |
@@ -128,7 +165,7 @@ jobs:
       
       - name: Setup test environment - Mixed quality samples
         run: |
-          # Create PASSED sample (high TE%, all libraries present)
+          # PASSED sample (high TE%, all libraries present)
           mkdir -p test_data/good_genome/good_genome.mod.EDTA.raw
           dd if=/dev/zero of=test_data/good_genome/good_genome.mod.EDTA.raw/good_genome.LTR.raw.fa bs=1K count=600
           dd if=/dev/zero of=test_data/good_genome/good_genome.mod.EDTA.raw/good_genome.TIR.intact.raw.fa bs=1K count=120
@@ -138,7 +175,7 @@ jobs:
           echo "Total TE: 28.5%" > test_data/good_genome/good_genome.TEanno.sum
           echo "EDTA complete" > test_data/good_genome/run.log
           
-          # Create FAILED sample (low TE%)
+          # FAILED sample (low TE%)
           mkdir -p test_data/poor_genome/poor_genome.mod.EDTA.raw
           dd if=/dev/zero of=test_data/poor_genome/poor_genome.mod.EDTA.raw/poor_genome.LTR.raw.fa bs=1K count=600
           dd if=/dev/zero of=test_data/poor_genome/poor_genome.mod.EDTA.raw/poor_genome.TIR.intact.raw.fa bs=1K count=120
@@ -148,13 +185,15 @@ jobs:
           echo "Total TE: 5.2%" > test_data/poor_genome/poor_genome.TEanno.sum
           echo "EDTA complete" > test_data/poor_genome/run.log
           
-          # Create FAILED sample (missing libraries)
+          # FAILED sample (missing libraries)
           mkdir -p test_data/incomplete_genome/incomplete_genome.mod.EDTA.raw
           dd if=/dev/zero of=test_data/incomplete_genome/incomplete_genome.mod.EDTA.raw/incomplete_genome.LTR.raw.fa bs=1K count=600
           echo "Total TE: 22.0%" > test_data/incomplete_genome/incomplete_genome.TEanno.sum
           echo "EDTA complete" > test_data/incomplete_genome/run.log
           
+          echo "=========================================="
           echo "Initial directory structure:"
+          echo "=========================================="
           ls -la test_data/
       
       - name: Make script executable
@@ -162,10 +201,11 @@ jobs:
       
       - name: Run EDTA Audit - With Move Operations
         run: |
+          echo ""
           echo "=========================================="
           echo "DEMO 3: Move Pass/Fail Samples"
-          echo "Pass samples -> output/passed-edta_audit"
-          echo "Fail samples -> output/failed-edta_audit"
+          echo "Pass → output/passed-edta_audit"
+          echo "Fail → output/failed-edta_audit"
           echo "=========================================="
           ./edta_audit.sh -d test_data -t plant -m output/passed -x output/failed
       
@@ -173,18 +213,20 @@ jobs:
         run: |
           echo ""
           echo "=========================================="
-          echo "PASSED samples directory:"
+          echo "PASSED SAMPLES DIRECTORY:"
           echo "=========================================="
-          ls -la output/passed-edta_audit/ || echo "No passed samples"
+          ls -la output/passed-edta_audit/ 2>/dev/null || echo "No passed samples"
           
           echo ""
           echo "=========================================="
-          echo "FAILED samples directory:"
+          echo "FAILED SAMPLES DIRECTORY:"
           echo "=========================================="
-          ls -la output/failed-edta_audit/ || echo "No failed samples"
+          ls -la output/failed-edta_audit/ 2>/dev/null || echo "No failed samples"
           
           echo ""
-          echo "Original test_data directory (should be mostly empty):"
+          echo "=========================================="
+          echo "Original test_data (should be empty now):"
+          echo "=========================================="
           ls -la test_data/
       
       - name: Display results summary
@@ -195,13 +237,14 @@ jobs:
           echo "=========================================="
           echo ""
           echo "Failed samples with reasons:"
-          cat edta_failed_list.txt || echo "No failures"
+          cat edta_failed_list.txt 2>/dev/null || echo "No failures"
           echo ""
           echo "Passed samples:"
-          cat edta_passed_list.txt || echo "No passes"
+          cat edta_passed_list.txt 2>/dev/null || echo "No passes"
       
       - name: Upload results and moved directories
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: demo3-results
           path: |
@@ -237,7 +280,19 @@ jobs:
           echo "Total TE: 2.5%" > test_data/scattered_poor.TEanno.sum
           echo "EDTA complete" > test_data/scattered_poor/run.log
           
+          # Another good sample (no scattering)
+          mkdir -p test_data/clean_good/clean_good.mod.EDTA.raw
+          dd if=/dev/zero of=test_data/clean_good/clean_good.mod.EDTA.raw/clean_good.LTR.raw.fa bs=1K count=700
+          dd if=/dev/zero of=test_data/clean_good/clean_good.mod.EDTA.raw/clean_good.TIR.intact.raw.fa bs=1K count=150
+          dd if=/dev/zero of=test_data/clean_good/clean_good.mod.EDTA.raw/clean_good.LINE.raw.fa bs=1K count=50
+          dd if=/dev/zero of=test_data/clean_good/clean_good.mod.EDTA.raw/clean_good.Helitron.intact.raw.fa bs=1K count=70
+          dd if=/dev/zero of=test_data/clean_good/clean_good.mod.EDTA.raw/clean_good.SINE.raw.fa bs=1 count=700
+          echo "Total TE: 35.8%" > test_data/clean_good/clean_good.TEanno.sum
+          echo "EDTA complete" > test_data/clean_good/run.log
+          
+          echo "=========================================="
           echo "Directory structure BEFORE processing:"
+          echo "=========================================="
           ls -lR test_data/
       
       - name: Make script executable
@@ -245,11 +300,12 @@ jobs:
       
       - name: Run EDTA Audit - All Features
         run: |
+          echo ""
           echo "=========================================="
           echo "DEMO 4: Combined Features"
-          echo "  -O: Organize scattered files"
-          echo "  -m: Move passed to results/qc_passed"
-          echo "  -x: Move failed to results/qc_failed"
+          echo "  -O: Organize scattered files first"
+          echo "  -m: Move passed → results/qc_passed"
+          echo "  -x: Move failed → results/qc_failed"
           echo "  -t: Plant mode (strict thresholds)"
           echo "=========================================="
           ./edta_audit.sh -d test_data -t plant -O -m results/qc_passed -x results/qc_failed
@@ -261,30 +317,31 @@ jobs:
           echo "FINAL DIRECTORY STRUCTURE"
           echo "=========================================="
           echo ""
-          echo "QC PASSED samples:"
-          ls -lR results/qc_passed-edta_audit/ || echo "None"
+          echo "✅ QC PASSED samples:"
+          ls -lR results/qc_passed-edta_audit/ 2>/dev/null || echo "None"
           echo ""
-          echo "QC FAILED samples:"
-          ls -lR results/qc_failed-edta_audit/ || echo "None"
+          echo "❌ QC FAILED samples:"
+          ls -lR results/qc_failed-edta_audit/ 2>/dev/null || echo "None"
           echo ""
-          echo "Original directory (should be empty):"
-          ls -la test_data/
+          echo "📁 Original directory (should be empty):"
+          ls -la test_data/ 2>/dev/null || echo "Directory removed (all moved)"
       
       - name: Display comprehensive report
         run: |
           echo ""
           echo "=========================================="
-          echo "COMPREHENSIVE QC REPORT"
+          echo "📊 COMPREHENSIVE QC REPORT"
           echo "=========================================="
           echo ""
-          echo "FAILED SAMPLES WITH DETAILED REASONS:"
-          cat edta_failed_list.txt
+          echo "❌ FAILED SAMPLES WITH DETAILED REASONS:"
+          cat edta_failed_list.txt 2>/dev/null
           echo ""
-          echo "PASSED SAMPLES:"
-          cat edta_passed_list.txt
+          echo "✅ PASSED SAMPLES:"
+          cat edta_passed_list.txt 2>/dev/null
       
       - name: Upload all results
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: demo4-combined-results
           path: |
@@ -293,7 +350,7 @@ jobs:
             results/
 
   summary:
-    name: "Generate Demo Summary"
+    name: "📋 Generate Demo Summary"
     runs-on: ubuntu-latest
     needs: [demo-basic-usage, demo-organize-mode, demo-move-samples, demo-combined]
     if: always()
@@ -301,41 +358,76 @@ jobs:
     steps:
       - name: Create summary
         run: |
-          echo "# EDTA Audit Script - Demo Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## Three Main Usage Scenarios Demonstrated:" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 1️⃣ Basic Usage (No Organization)" >> $GITHUB_STEP_SUMMARY
-          echo '```bash' >> $GITHUB_STEP_SUMMARY
-          echo './edta_audit.sh -d <input_directory> -t <type>' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "- Reports errors for scattered files" >> $GITHUB_STEP_SUMMARY
-          echo "- Expects properly organized directory structure" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 2️⃣ With Organization (-O flag)" >> $GITHUB_STEP_SUMMARY
-          echo '```bash' >> $GITHUB_STEP_SUMMARY
-          echo './edta_audit.sh -d <input_directory> -t <type> -O' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "- Automatically organizes scattered files" >> $GITHUB_STEP_SUMMARY
-          echo "- Merges files into proper directory structure" >> $GITHUB_STEP_SUMMARY
-          echo "- Then performs QC audit" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 3️⃣ Move Pass/Fail Samples (-m/-x flags)" >> $GITHUB_STEP_SUMMARY
-          echo '```bash' >> $GITHUB_STEP_SUMMARY
-          echo './edta_audit.sh -d <input_directory> -t <type> -m <pass_dir> -x <fail_dir>' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "- Moves passed samples to specified directory" >> $GITHUB_STEP_SUMMARY
-          echo "- Moves failed samples to specified directory" >> $GITHUB_STEP_SUMMARY
-          echo "- Organizes results automatically" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 4️⃣ Combined Usage (All features)" >> $GITHUB_STEP_SUMMARY
-          echo '```bash' >> $GITHUB_STEP_SUMMARY
-          echo './edta_audit.sh -d <input_directory> -t plant -O -m <pass_dir> -x <fail_dir>' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "- Combines all features for complete workflow" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## Species Modes Available:" >> $GITHUB_STEP_SUMMARY
-          echo "- 🌱 **plant**: Strict thresholds (20% TE minimum)" >> $GITHUB_STEP_SUMMARY
-          echo "- 🐅 **animal**: Standard thresholds (5% TE minimum)" >> $GITHUB_STEP_SUMMARY
-          echo "- 🍄 **fungi**: Permissive thresholds (1% TE minimum)" >> $GITHUB_STEP_SUMMARY
-          echo "- ⚙️ **other**: General mode (3% TE minimum)" >> $GITHUB_STEP_SUMMARY
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          # 🧬 EDTA Audit Script - Demo Summary
+          
+          ## ✅ Three Main Usage Scenarios Demonstrated:
+          
+          ### 1️⃣ Basic Usage (No Organization)
+          ```bash
+          ./edta_audit.sh -d <input_directory> -t <type>
+          ```
+          - Reports errors for scattered files
+          - Expects properly organized directory structure
+          - Useful when EDTA output is already organized
+          
+          **Expected behavior**: Sample with scattered files will **FAIL** with error "RawDirMissing(Try -O)"
+          
+          ---
+          
+          ### 2️⃣ With Organization (-O flag)
+          ```bash
+          ./edta_audit.sh -d <input_directory> -t <type> -O
+          ```
+          - **Automatically organizes scattered files**
+          - Merges `*.mod.EDTA.raw`, `*.TEanno.sum` into proper directories
+          - Then performs QC audit
+          
+          **Expected behavior**: Scattered files are merged, then properly audited
+          
+          ---
+          
+          ### 3️⃣ Move Pass/Fail Samples (-m/-x flags)
+          ```bash
+          ./edta_audit.sh -d <input_directory> -t <type> -m <pass_dir> -x <fail_dir>
+          ```
+          - Moves **passed** samples to `<pass_dir>-edta_audit/`
+          - Moves **failed** samples to `<fail_dir>-edta_audit/`
+          - Organizes results automatically for easy downstream processing
+          
+          **Expected behavior**: Clean separation of QC pass/fail samples
+          
+          ---
+          
+          ### 4️⃣ Combined Usage (All features)
+          ```bash
+          ./edta_audit.sh -d <input_directory> -t plant -O -m <pass_dir> -x <fail_dir>
+          ```
+          - **Complete workflow**: Organize → Audit → Separate
+          - Recommended for production use
+          
+          ---
+          
+          ## 🌍 Species Modes Available:
+          
+          | Mode | Icon | TE% Min | LTR Min | LINE Min | Use Case |
+          |------|------|---------|---------|----------|----------|
+          | **plant** | 🌱 | 20% | 500 KB | 30 KB | Strict (plant genomes) |
+          | **animal** | 🐅 | 5% | 10 KB | 50 KB | Standard (animal genomes) |
+          | **fungi** | 🍄 | 1% | 5 KB | 1 KB | Permissive (fungal genomes) |
+          | **other** | ⚙️ | 3% | 10 KB | 5 KB | General purpose |
+          
+          ---
+          
+          ## 📦 Output Files:
+          - `edta_passed_list.txt` - List of samples that passed QC
+          - `edta_failed_list.txt` - List of failed samples **with reasons**
+          
+          ## 🎯 Quality Checks Performed:
+          1. ✅ TE percentage threshold
+          2. ✅ LTR library size
+          3. ✅ TIR library size
+          4. ✅ LINE library size
+          5. ✅ Helitron library size
+          6. ✅ SINE library size
+          EOF
