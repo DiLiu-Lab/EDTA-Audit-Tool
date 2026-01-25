@@ -1,4 +1,4 @@
-name: Final Demo (Guaranteed Success)
+name: Final Demo (Fixed Filenames)
 
 on:
   push:
@@ -6,82 +6,84 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-final-demo:
+  run-demo:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
 
-    # 1. 强力清洗 Windows 格式 (使用 sed + bash 运行，双重保险)
-    - name: 🧼 Prepare Script
+    # 1. 彻底清洗 Windows 格式
+    - name: 🧼 Fix Windows Line Endings
       run: |
-        sed -i 's/\r$//' edta_audit.sh
+        sudo apt-get update
+        sudo apt-get install -y dos2unix
+        dos2unix edta_audit.sh
         chmod +x edta_audit.sh
-        echo "✅ Script cleaned."
+        echo "✅ Script converted to Unix format."
 
-    # 2. 场景 1: 默认模式 (预期报错，我们允许它报错)
+    # 2. 场景 1: 默认模式 (预期报错，因为文件散乱且没开 -O)
     - name: 🧪 Scenario 1: Default Usage (Expect Fail)
       run: |
         echo "----------------------------------------------------"
-        # 制造一个混乱现场
-        mkdir -p Data_Scen1/Maize_Sample
-        # 把 sum 文件放进去 (让它不是因为缺文件报错，而是因为没整理报错)
-        echo "  Total TE: 45.00%" > Data_Scen1/Maize_Sample/Maize_Sample.TEanno.sum
-        # 关键：把 raw 文件夹扔在外面！
-        mkdir -p Data_Scen1/Maize_Sample.mod.EDTA.raw
-        touch Data_Scen1/Maize_Sample.mod.EDTA.raw/Maize.LTR.raw.fa
+        mkdir -p Data_Scen1/Maize_Genomic
         
-        echo ">>> Running Command (Expect Error because raw data is outside)..."
-        # 使用 'bash' 显式运行，防止 shebang 报错
-        bash edta_audit.sh -d Data_Scen1 -t plant || true
+        # 制造散乱文件 (注意：这里故意不加 .fna.mod 后缀，脚本不会整理，自然会报错)
+        echo "  Total TE: 45.00%" > Data_Scen1/Maize.TEanno.sum
+        
+        echo ">>> Running Command (Expect Error)..."
+        # 加上 || true 允许报错，不中断流程
+        ./edta_audit.sh -d Data_Scen1 -t plant || true
 
-    # 3. 场景 2: 整理模式 (使用 -O 自动吸入 raw 文件夹)
+    # 3. 场景 2: 整理模式 (加 -O)
     - name: ✨ Scenario 2: With -O Flag (Auto-Organize)
       run: |
         echo "----------------------------------------------------"
-        mkdir -p Data_Scen2/Rice_Sample
+        # 创建主文件夹
+        mkdir -p Data_Scen2/Rice_Genomic
         
-        # [关键调整] 我们把 .sum 文件直接放进文件夹里 (避开脚本暂不支持整理 sum 的短板)
-        echo "  Total TE: 35.00%" > Data_Scen2/Rice_Sample/Rice.TEanno.sum
+        # [关键修改] 使用符合您脚本逻辑的长文件名 (包含 .fna.mod)
+        # 这样您的脚本才能识别出 "Rice_Genomic" 是父目录，并把它移进去
+        echo "  Total TE: 35.00%" > Data_Scen2/Rice_Genomic.fna.mod.EDTA.TEanno.sum
         
-        # [演示核心] 把 .raw 文件夹扔在外面，看 -O 把它抓回来！
-        mkdir -p Data_Scen2/Rice_Sample.mod.EDTA.raw
-        # 创建达标的假文件
-        truncate -s 600K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.LTR.raw.fa
-        truncate -s 100K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.LINE.raw.fa
-        truncate -s 100K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.Helitron.intact.raw.fa
-        truncate -s 200K Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.TIR.intact.raw.fa
-        truncate -s 1K   Data_Scen2/Rice_Sample.mod.EDTA.raw/Rice.SINE.raw.fa
+        # 创建散落在外的 raw 文件夹
+        mkdir -p Data_Scen2/Rice_Genomic.fna.mod.EDTA.raw
+        truncate -s 600K Data_Scen2/Rice_Genomic.fna.mod.EDTA.raw/Rice.LTR.raw.fa
+        truncate -s 100K Data_Scen2/Rice_Genomic.fna.mod.EDTA.raw/Rice.LINE.raw.fa
+        truncate -s 100K Data_Scen2/Rice_Genomic.fna.mod.EDTA.raw/Rice.Helitron.intact.raw.fa
+        truncate -s 200K Data_Scen2/Rice_Genomic.fna.mod.EDTA.raw/Rice.TIR.intact.raw.fa
+        truncate -s 1K   Data_Scen2/Rice_Genomic.fna.mod.EDTA.raw/Rice.SINE.raw.fa
 
-        echo ">>> Running Command with -O (Should move raw dir inside and Pass)..."
-        bash edta_audit.sh -d Data_Scen2 -t plant -O
+        echo ">>> Running Command with -O (Should Move Files & Pass)..."
+        ./edta_audit.sh -d Data_Scen2 -t plant -O
 
-    # 4. 场景 3: 综合管理模式
-    - name: 📦 Scenario 3: Full Options (-m -x)
+    # 4. 场景 3: 综合管理模式 (-O -m -x)
+    - name: 📦 Scenario 3: Full Options (Sort Results)
       run: |
         echo "----------------------------------------------------"
-        # 准备好样本 (Good)
-        mkdir -p Data_Scen3/Good_Sample
-        echo "  Total TE: 55.00%" > Data_Scen3/Good_Sample/Good.TEanno.sum
-        # raw 文件夹在外面，等待被 -O 整理
-        mkdir -p Data_Scen3/Good_Sample.mod.EDTA.raw
-        truncate -s 800K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.LTR.raw.fa
-        truncate -s 100K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.LINE.raw.fa
-        truncate -s 100K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.Helitron.intact.raw.fa
-        truncate -s 200K Data_Scen3/Good_Sample.mod.EDTA.raw/Good.TIR.intact.raw.fa
-        truncate -s 1K   Data_Scen3/Good_Sample.mod.EDTA.raw/Good.SINE.raw.fa
+        # --- 样本 A (Good) ---
+        mkdir -p Data_Scen3/Good_Genomic
+        # 散乱文件 (带正确后缀)
+        echo "  Total TE: 55.00%" > Data_Scen3/Good_Genomic.fna.mod.EDTA.TEanno.sum
+        mkdir -p Data_Scen3/Good_Genomic.fna.mod.EDTA.raw
+        truncate -s 800K Data_Scen3/Good_Genomic.fna.mod.EDTA.raw/Good.LTR.raw.fa
+        truncate -s 100K Data_Scen3/Good_Genomic.fna.mod.EDTA.raw/Good.LINE.raw.fa
+        truncate -s 100K Data_Scen3/Good_Genomic.fna.mod.EDTA.raw/Good.Helitron.intact.raw.fa
+        truncate -s 200K Data_Scen3/Good_Genomic.fna.mod.EDTA.raw/Good.TIR.intact.raw.fa
+        truncate -s 1K   Data_Scen3/Good_Genomic.fna.mod.EDTA.raw/Good.SINE.raw.fa
 
-        # 准备坏样本 (Bad)
-        mkdir -p Data_Scen3/Bad_Sample
-        echo "  Total TE: 2.00%" > Data_Scen3/Bad_Sample/Bad.TEanno.sum 
+        # --- 样本 B (Bad) ---
+        mkdir -p Data_Scen3/Bad_Genomic
+        # TE 含量太低 (2%)
+        echo "  Total TE: 2.00%" > Data_Scen3/Bad_Genomic/Bad_Genomic.TEanno.sum 
+        # (这里为了简单，我们直接把 sum 文件放进去，确保它因为数值低而 Fail，而不是因为没文件)
         
-        echo ">>> Running Command..."
-        bash edta_audit.sh -d Data_Scen3 -t plant -O -m Final_Pass -x Final_Fail
+        echo ">>> Running Command with -m -x..."
+        ./edta_audit.sh -d Data_Scen3 -t plant -O -m Final_Pass -x Final_Fail
 
         echo "----------------------------------------------------"
         echo "Checking Results..."
         
-        # 宽容检查，保证变绿
+        # 验证结果文件夹是否存在
         if [ -d "Final_Pass-edta_audit" ]; then 
              echo "✅ Found Pass Directory"
              ls -F Final_Pass-edta_audit/
