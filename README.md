@@ -82,6 +82,8 @@ EDTA-Audit successfully distinguished high-quality assemblies from those with an
 
 *(See the full list of 13 genomes in `benchmarking/accession_ids.txt`)*
 
+Large-Scale Validation: Beyond the 13 reference genomes, we stress-tested EDTA-Audit on 142 diverse genomic datasets. The tool successfully handled incomplete runs, zero-TE artifacts, and library collapses. See the full log: benchmarking/large_scale_test.log.
+
 ### 🔄 How to Reproduce
 You can reproduce these results by downloading the exact datasets used in our paper:
 
@@ -148,6 +150,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 2. Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. **Evolution and Diversity of Transposable Elements in Vertebrate Genomes.** *Genome Biology and Evolution* 9, 161-177, doi:10.1093/gbe/evw264 (2017).
 3. Castanera, R. et al. **Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles.** *PLOS Genetics* 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
 4. Zhang, G. et al. **Comparative genomics reveals insights into avian genome evolution and adaptation.** *Science* 346, 1311-1320, doi:10.1126/science.1251385 (2014).
+
 
 
 
