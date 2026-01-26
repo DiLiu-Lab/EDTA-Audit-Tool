@@ -79,6 +79,7 @@ EDTA-Audit successfully distinguished high-quality assemblies from those with an
 | **GCF_048772165.1** | *Typha angustifolia* | 26.20% | 793 KB | 53 KB | ✅ **PASS** |
 | **GCF_019578655.1** | *Ricinus communis* | 40.46% | 3.1 MB | 22 KB | ❌ **FAIL (Low LINEs)** |
 | **GCF_009805555.1** | *Andrographis paniculata* | 38.27% | 2.9 MB | 27 KB | ❌ **FAIL (Low LINEs)** |
+
 *(See the full list of 13 genomes in `benchmarking/accession_ids.txt`)*
 
 ### 🔄 How to Reproduce
@@ -147,6 +148,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 2. Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. **Evolution and Diversity of Transposable Elements in Vertebrate Genomes.** *Genome Biology and Evolution* 9, 161-177, doi:10.1093/gbe/evw264 (2017).
 3. Castanera, R. et al. **Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles.** *PLOS Genetics* 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
 4. Zhang, G. et al. **Comparative genomics reveals insights into avian genome evolution and adaptation.** *Science* 346, 1311-1320, doi:10.1126/science.1251385 (2014).
+
 
 
 
