@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Liu"
+    given-names: "Di"
+title: "EDTA-Audit: Taxonomy-Aware Quality Control Framework for EDTA Annotations"
+version: 1.0.0
+date-released: 2026-01-25
+url: "https://github.com/DiLiu-Lab/EDTA-Audit-Tool"
+license: MIT
