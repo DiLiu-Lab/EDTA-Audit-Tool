@@ -1,0 +1,41 @@
+[1;33m>>> Organizing Directory (Smart Move)...[0m
+[0;32m>>> Organization complete.[0m
+
+[0;36m================================================================[0m
+[0;36m          EDTA QC Audit Tool v1.0.0 (Species Aware)             [0m
+[0;36m================================================================[0m
+Standard    : 🌱 Plant Mode (Strict)
+Safety      : Skipping folders ending in '-edta_audit'
+[0;36m----------------------------------------------------------------[0m
+[1] [1;33mGCA_023512835.1_ASM2351283v1_genomic[0m
+    📊[0;32m60.04%[0m | [0;32mLTR:5.4M[0m [0;32mTIR:2.5M[0m [0;32mLINE:63K[0m [0;32mHeli:361K[0m [0;32mSINE:6.0K[0m 
+[2] [1;33mGCF_029168945.1_ASM2916894v1_genomic[0m
+    📊[0;32m71.90%[0m | [0;32mLTR:9.2M[0m [0;32mTIR:2.9M[0m [0;32mLINE:139K[0m [0;32mHeli:241K[0m [0;32mSINE:13K[0m 
+[3] [1;33mGCF_009727055.1_ASM972705v1_genomic[0m
+    📊[0;32m66.28%[0m | [0;32mLTR:4.1M[0m [0;32mTIR:2.8M[0m [0;32mLINE:64K[0m [0;32mHeli:168K[0m [0;32mSINE:26K[0m 
+[4] [1;33mGCF_019578655.1_ASM1957865v1_genomic[0m
+    📊[0;32m40.46%[0m | [0;32mLTR:3.1M[0m [0;32mTIR:888K[0m [0;31mLINE:22K(Small)[0m [0;32mHeli:304K[0m [0;32mSINE:3.6K[0m 
+[5] [1;33mGCF_009805555.1_ASM980555v1_genomic[0m
+    📊[0;32m38.27%[0m | [0;32mLTR:2.9M[0m [0;32mTIR:1.4M[0m [0;31mLINE:27K(Small)[0m [0;32mHeli:249K[0m [0;32mSINE:6.0K[0m 
+[6] [1;33mGCA_024500145.1_ASM2450014v1_genomic[0m
+    📊[0;32m76.43%[0m | [0;32mLTR:33M[0m [0;32mTIR:9.1M[0m [0;32mLINE:110K[0m [0;32mHeli:747K[0m [0;32mSINE:37K[0m 
+[7] [1;33mGCF_025177605.1_USDA_Cmelo_AY_1.0_genomic[0m
+    📊[0;32m42.80%[0m | [0;32mLTR:2.9M[0m [0;32mTIR:4.0M[0m [0;32mLINE:45K[0m [0;32mHeli:338K[0m [0;32mSINE:16K[0m 
+[8] [1;33mGCF_048772165.1_ASM4877216v1_genomic[0m
+    📊[0;32m26.20%[0m | [0;32mLTR:793K[0m [0;32mTIR:1.3M[0m [0;32mLINE:53K[0m [0;32mHeli:206K[0m [0;32mSINE:1.4K[0m 
+[9] [1;33mGCA_020226225.1_ST_assembly_genomic[0m
+    📊[0;32m31.53%[0m | [0;32mLTR:4.6M[0m [0;32mTIR:3.1M[0m [0;32mLINE:39K[0m [0;32mHeli:322K[0m [0;32mSINE:4.8K[0m 
+[10] [1;33mGCF_001879475.1_Asagao_1.1_genomic[0m
+    📊[0;32m61.28%[0m | [0;32mLTR:16M[0m [0;32mTIR:6.9M[0m [0;32mLINE:102K[0m [0;32mHeli:423K[0m [0;32mSINE:35K[0m 
+[11] [1;33mGCF_028751815.1_IMPLAD_Smil_shh_genomic[0m
+    📊[0;32m62.90%[0m | [0;32mLTR:15M[0m [0;32mTIR:17M[0m [0;32mLINE:94K[0m [0;32mHeli:1.2M[0m [0;32mSINE:18K[0m 
+[12] [1;33mGCF_001411555.2_Walnut_2.0_genomic[0m
+    📊[0;32m44.37%[0m | [0;32mLTR:4.8M[0m [0;32mTIR:3.7M[0m [0;32mLINE:129K[0m [0;32mHeli:317K[0m [0;32mSINE:26K[0m 
+[13] [1;33mGCF_022201045.2_DVS_A1.0_genomic[0m
+    📊[0;32m37.75%[0m | [0;32mLTR:4.1M[0m [0;32mTIR:2.9M[0m [0;32mLINE:54K[0m [0;32mHeli:191K[0m [0;32mSINE:14K[0m 
+[0;36m----------------------------------------------------------------[0m
+Audit Complete! Scanned: 13
+Passed : [0;32m11[0m -> Saved to edta_passed_list.txt
+Failed : [0;31m2[0m -> Saved to edta_failed_list.txt
+Moved Passed to: PASSED-edta_audit
+Moved Failed to: FAILED-edta_audit
