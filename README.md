@@ -114,7 +114,7 @@ chmod +x edta_audit.sh generate_validation_set.sh
 Here is a real-world demonstration running on **13 NCBI Angiosperm assemblies**. 
 The tool is executed in **Plant Mode** with automatic sorting flags (`-m` and `-x`) enabled:
 
-![EDTA-Audit Demo Interface](Demo.png)
+![EDTA-Audit Demo Interface](images/Demo.png)
 ### Basic Command
 ```bash
 ./edta_audit.sh -d <input_directory> -t <type> [options]
@@ -150,6 +150,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 2. Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. **Evolution and Diversity of Transposable Elements in Vertebrate Genomes.** *Genome Biology and Evolution* 9, 161-177, doi:10.1093/gbe/evw264 (2017).
 3. Castanera, R. et al. **Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles.** *PLOS Genetics* 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
 4. Zhang, G. et al. **Comparative genomics reveals insights into avian genome evolution and adaptation.** *Science* 346, 1311-1320, doi:10.1126/science.1251385 (2014).
+
 
 
 
