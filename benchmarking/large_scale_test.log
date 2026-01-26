@@ -1,0 +1,292 @@
+(base) [root@localhost results]# ./edta_audit.sh -d /data/NCBI-jieya_EDTA -t plant
+================================================================
+          EDTA QC Audit Tool v1.0.0 (Species Aware)             
+================================================================
+Standard    : 🌱 Plant Mode (Strict)
+Safety      : Skipping folders ending in '-edta_audit'
+----------------------------------------------------------------
+[1] GCA_003260385.1_Cau_v1.0_genomic
+    📊0.00% | LTR:6.3M TIR:9.6M LINE:81K Heli:784K SINE:8.2K 
+[2] GCA_037177395.1_ASM3717739v1_genomic
+    📊21.58% | LTR:14K(Small) TIR:685K LINE:29K(Small) Heli:139K SINE:180K 
+[3] GCA_037693485.1_ASM3769348v1_genomic
+    📊NoResults | LTR:54M TIR:Miss LINE:71K Heli:Miss SINE:43K 
+[4] GCA_037954105.1_Cgla_1_genomic
+    📊36.41% | LTR:5.3M TIR:1.1M LINE:53K Heli:302K SINE:15K 
+[5] GCA_037974795.1_ASM3797479v1_genomic
+    📊1.23% | LTR:8.0K(Small) TIR:577K LINE:36K Heli:183K SINE:3.8K 
+[6] GCA_039639715.1_ASM3963971v1_genomic
+    📊0.00% | LTR:1.6M TIR:1.4M LINE:77K Heli:173K SINE:13K 
+[7] GCA_039654745.1_CUHK_Hcor_1_genomic
+    📊0.00% | LTR:5.5M TIR:8.8M LINE:64K Heli:356K SINE:15K 
+[8] GCA_039720395.1_ZJU_Lfor_1.0_genomic
+    📊0.00% | LTR:7.7M TIR:7.4M LINE:160K Heli:750K SINE:31K 
+[9] GCA_040143745.1_ASM4014374v1_genomic
+    📊0.00% | LTR:23M TIR:7.3M LINE:58K Heli:2.1M SINE:28K 
+[10] GCA_040207345.1_Final_corrected_assemly_genome_genomic
+    📊0.00% | LTR:2.1M TIR:1.4M LINE:80K Heli:210K SINE:14K 
+[11] GCA_040256895.1_C.teeta_hap1v1.0_genomic
+    📊0.00% | LTR:19M TIR:13M LINE:159K Heli:768K SINE:21K 
+[12] GCA_040581565.1_ASM4058156v1_genomic
+    📊0.00% | LTR:9.6M TIR:6.7M LINE:142K Heli:701K SINE:108K 
+[13] GCA_040721895.1_ASM4072189v1_genomic
+    📊25.04% | LTR:314K(Small) TIR:1.2M LINE:38K Heli:120K SINE:16K 
+[14] GCA_040802715.1_GZUCM_Ccassia_1.0_genomic
+    📊NoResults | LTR:602K TIR:1.3M LINE:104K Heli:87K SINE:32K 
+[15] GCA_040869085.1_ASM4086908v1_genomic
+    📊0.00% | LTR:12M TIR:15M LINE:68K Heli:1.4M SINE:58K 
+[16] GCA_041138505.1_ASM4113850v1_genomic
+    📊NoResults | LTR:29M TIR:Miss LINE:124K Heli:Miss SINE:74K 
+[17] GCA_041296325.1_ASM4129632v1_genomic
+    📊NoResults | LTR:9.5M TIR:Miss LINE:16K(Small) Heli:Miss SINE:86K 
+[18] GCA_042100155.1_ASM4210015v1_genomic
+    📊0.00% | LTR:13M TIR:11M LINE:93K Heli:1.3M SINE:11K 
+[19] GCA_042692115.1_ASM4269211v1_genomic
+    📊0.00% | LTR:6.1M TIR:3.5M LINE:73K Heli:132K SINE:26K 
+[20] GCA_042924565.1_ASM4292456v1_genomic
+    📊0.00% | LTR:41M TIR:20M LINE:112K Heli:1.9M SINE:125K 
+[21] GCA_043789865.1_ASM4378986v1_genomic
+    📊0.00% | LTR:3.0M TIR:1.3M LINE:40K Heli:438K SINE:4.2K 
+[22] GCA_043793475.1_ASM4379347v1_genomic
+    📊0.00% | LTR:16M TIR:8.9M LINE:77K Heli:1.2M SINE:26K 
+[23] GCA_043873815.1_ASM4387381v1_genomic
+    📊0.00% | LTR:537K TIR:966K LINE:49K Heli:355K SINE:3.1K 
+[24] GCA_044231435.1_ASM4423143v1_genomic
+    📊0.00% | LTR:9.3M TIR:8.8M LINE:90K Heli:444K SINE:26K 
+[25] GCA_044706935.1_ITB_CL_G26_1.1_genomic
+    📊0.00% | LTR:1.5M TIR:3.2M LINE:35K Heli:279K SINE:83K 
+[26] GCA_044905855.1_ASM4490585v1_genomic
+    📊0.00% | LTR:16M TIR:6.6M LINE:28K(Small) Heli:766K SINE:16K 
+[27] GCA_045071785.1_ASM4507178v1_genomic
+    📊NoResults | LTR:17M TIR:Miss LINE:98K Heli:Miss SINE:134K 
+[28] GCA_046128155.1_ASM4612815v1_genomic
+    📊0.00% | LTR:4.4M TIR:3.3M LINE:116K Heli:136K SINE:44K 
+[29] GCA_046470805.1_ASM4647080v1_genomic
+    📊NoResults | LTR:4.6M TIR:Miss LINE:58K Heli:Miss SINE:18K 
+[30] GCA_046736235.1_TOH_Aalt_1.0_genomic
+    📊55.05% | LTR:2.7M TIR:1.5M LINE:81K Heli:282K SINE:28K 
+[31] GCA_047301065.1_ASM4730106v1_genomic
+    📊38.85% | LTR:4.1M TIR:2.9M LINE:49K Heli:177K SINE:17K 
+[32] GCA_048165065.1_ASM4816506v1_genomic
+    📊63.81% | LTR:19M TIR:8.5M LINE:98K Heli:1.3M SINE:133K 
+[33] GCA_048169125.1_EIMB_LUsi_K-3018_1.0_genomic
+    📊NoResults | LTR:1.5M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[34] GCA_048569145.1_CTS_1.0_genomic
+    📊NoResults | LTR:19M TIR:Miss LINE:90K Heli:Miss SINE:39K 
+[35] GCA_048932765.1_ASM4893276v1_genomic
+    📊NoResults | LTR:16M TIR:Miss LINE:174K Heli:Miss SINE:25K 
+[36] GCA_048937375.1_ASM4893737v1_genomic
+    📊NoResults | LTR:4.3M TIR:Miss LINE:25K(Small) Heli:Miss SINE:16K 
+[37] GCA_049191275.1_ASM4919127v1_genomic
+    📊55.09% | LTR:13M TIR:8.7M LINE:108K Heli:1.4M SINE:20K 
+[38] GCA_049355005.1_ASM4935500v1_genomic
+    📊56.91% | LTR:7.7M TIR:2.9M LINE:81K Heli:1.1M SINE:21K 
+[39] GCA_903112645.1_pruArmRojPasHapCUR_genomic
+    📊28.41% | LTR:3.5M TIR:3.3M LINE:65K Heli:326K SINE:6.3K 
+[40] GCA_911865555.2_T_arvense_v2_genomic
+    📊63.72% | LTR:4.5M TIR:1.4M LINE:108K Heli:1.3M SINE:13K 
+[41] GCA_934048045.1_dcPolAvic1.1_genomic
+    📊50.81% | LTR:8.4M TIR:4.9M LINE:94K Heli:844K SINE:14K 
+[42] GCA_958496215.1_daVerOffi1.1_genomic
+    📊50.27% | LTR:2.7M TIR:1.4M LINE:53K Heli:907K SINE:11K 
+[43] GCA_964605395.1_daTusFarf1.hap1.1_genomic
+    📊NoResults | LTR:14M TIR:Miss LINE:28K(Small) Heli:Miss SINE:31K 
+[44] GCA_965112915.1_ddEupMacu1.hap1.1_genomic
+    📊51.80% | LTR:12M TIR:5.8M LINE:57K Heli:867K SINE:26K 
+[45] GCA_965151525.1_Oryza_sativa_giza178_FlyeMedaka_v1_genomic
+    📊50.41% | LTR:3.6M TIR:13M LINE:91K Heli:4.5M SINE:11K 
+[46] GCA_965212045.1_lpHorVulg1.hap2.1_genomic
+    📊NoResults | LTR:23M TIR:Miss LINE:92K Heli:Miss SINE:42K 
+[47] GCF_000004515.6_Glycine_max_v4.0_genomic
+    📊46.21% | LTR:6.1M TIR:3.7M LINE:77K Heli:907K SINE:19K 
+[48] GCF_000263155.2_Setaria_italica_v2.0_genomic
+    📊45.22% | LTR:3.6M TIR:5.9M LINE:135K Heli:2.2M SINE:22K 
+[49] GCF_000346465.2_Prunus_persica_NCBIv2_genomic
+    📊33.00% | LTR:4.8M TIR:2.6M LINE:43K Heli:441K SINE:6.9K 
+[50] GCF_000346735.1_P.mume_V1.0_genomic
+    📊26.77% | LTR:1.4M TIR:2.7M LINE:40K Heli:355K SINE:15K 
+[51] GCF_000365185.1_Chinese_Lotus_1.1_genomic
+    📊49.95% | LTR:3.8M TIR:5.8M LINE:219K Heli:261K SINE:59K 
+[52] GCF_000512975.1_S_indicum_v1.0_genomic
+    📊29.38% | LTR:2.4M TIR:1.1M LINE:59K Heli:193K SINE:5.5K 
+[53] GCF_000801105.2_ASM80110v3_genomic
+    📊42.43% | LTR:7.8M TIR:4.4M LINE:108K Heli:1.9M SINE:97K 
+[54] GCF_001411555.2_Walnut_2.0_genomic
+    📊44.37% | LTR:4.8M TIR:3.7M LINE:129K Heli:317K SINE:26K 
+[55] GCF_001879475.1_Asagao_1.1_genomic
+    📊61.28% | LTR:16M TIR:6.9M LINE:102K Heli:423K SINE:35K 
+[56] GCF_002878395.1_UCD10Xv1.1_genomic
+    📊NoResults | LTR:12M TIR:Miss LINE:90K Heli:Miss SINE:520K 
+[57] GCF_002994745.2_RchiOBHm-V2_genomic
+    📊56.99% | LTR:16M TIR:12M LINE:126K Heli:1.1M SINE:26K 
+[58] GCF_003573695.1_ASM357369v1_genomic
+    📊NoResults | LTR:37M TIR:Miss LINE:215K Heli:Miss SINE:69K 
+[59] GCF_007655135.1_ASM765513v2_genomic
+    📊43.88% | LTR:3.1M TIR:1.9M LINE:51K Heli:2.5M SINE:19K 
+[60] GCF_009727055.1_ASM972705v1_genomic
+    📊66.28% | LTR:4.1M TIR:2.8M LINE:64K Heli:168K SINE:26K 
+[61] GCF_009805555.1_ASM980555v1_genomic
+    📊38.27% | LTR:2.9M TIR:1.4M LINE:27K(Small) Heli:249K SINE:6.0K 
+[62] GCF_018446385.1_Zo_v1.1_genomic
+    📊NoResults | LTR:47M TIR:Miss LINE:32K Heli:Miss SINE:88K 
+[63] GCF_018835915.1_ASM1883591v1_genomic
+    📊30.43% | LTR:1.9M TIR:2.9M LINE:17K(Small) Heli:133K SINE:5.9K 
+[64] GCF_019175385.1_ASM1917538v2_genomic
+    📊NoResults | LTR:31M TIR:Miss LINE:101K Heli:Miss SINE:127K 
+[65] GCF_019578655.1_ASM1957865v1_genomic
+    📊40.46% | LTR:3.1M TIR:888K LINE:22K(Small) Heli:304K SINE:3.6K 
+[66] GCF_022201045.2_DVS_A1.0_genomic
+    📊37.75% | LTR:4.1M TIR:2.9M LINE:54K Heli:191K SINE:14K 
+[67] GCF_025177605.1_USDA_Cmelo_AY_1.0_genomic
+    📊42.80% | LTR:2.9M TIR:4.0M LINE:45K Heli:338K SINE:16K 
+[68] GCF_028751815.1_IMPLAD_Smil_shh_genomic
+    📊62.90% | LTR:15M TIR:17M LINE:94K Heli:1.2M SINE:18K 
+[69] GCF_029168945.1_ASM2916894v1_genomic
+    📊71.90% | LTR:9.2M TIR:2.9M LINE:139K Heli:241K SINE:13K 
+[70] GCF_031755915.1_ASM3175591v1_genomic
+    📊34.91% | LTR:2.1M TIR:966K LINE:47K Heli:160K SINE:9.2K 
+[71] GCF_048772165.1_ASM4877216v1_genomic
+    📊26.20% | LTR:793K TIR:1.3M LINE:53K Heli:206K SINE:1.4K 
+[72] GCF_958298935.1_lpPhrAust1.1_genomic
+    📊58.95% | LTR:6.4M TIR:8.3M LINE:137K Heli:3.0M SINE:17K 
+[73] GCF_958449725.1_drRosRugo1.1_genomic
+    📊52.20% | LTR:14M TIR:11M LINE:128K Heli:1.1M SINE:24K 
+[74] GCA_020205615.1_ASM2020561v1_genomic
+    📊NoResults | LTR:19M TIR:Miss LINE:26K(Small) Heli:Miss SINE:36K 
+[75] GCA_020226225.1_ST_assembly_genomic
+    📊31.53% | LTR:4.6M TIR:3.1M LINE:39K Heli:322K SINE:4.8K 
+[76] GCA_021015155.1_ASM2101515v1_genomic
+    📊NoResults | LTR:15M TIR:Miss LINE:75K Heli:Miss SINE:121K 
+[77] GCA_021397845.1_ASM2139784v1_genomic
+    📊NoResults | LTR:17M TIR:Miss LINE:42K Heli:Miss SINE:52K 
+[78] GCA_014162995.1_Aran_genomic -> ⏳ Running... (Skipped)
+[79] GCA_021464415.1_ASM2146441v1_genomic
+    📊54.73% | LTR:9.4M TIR:8.7M LINE:132K Heli:833K SINE:52K 
+[80] GCA_022539455.1_Dnobile_genomic
+    📊64.96% | LTR:15M TIR:8.6M LINE:61K Heli:313K SINE:38K 
+[81] GCA_022984855.1_ASM2298485v1_genomic
+    📊41.54% | LTR:5.9M TIR:2.7M LINE:99K Heli:244K SINE:15K 
+[82] GCA_023512835.1_ASM2351283v1_genomic
+    📊60.04% | LTR:5.4M TIR:2.5M LINE:63K Heli:361K SINE:6.0K 
+[83] GCA_023525715.1_ASM2352571v1_genomic
+    📊69.15% | LTR:24M TIR:9.8M LINE:69K Heli:2.4M SINE:73K 
+[84] GCA_023525745.1_ASM2352574v1_genomic
+    📊NoResults | LTR:33M TIR:Miss LINE:44K Heli:Miss SINE:113K 
+[85] GCA_023638005.1_ASM2363800v1_genomic
+    📊56.19% | LTR:8.4M TIR:7.4M LINE:57K Heli:1.2M SINE:45K 
+[86] GCA_023678885.1_GZUCM_PCab_1.0_genomic
+    📊NoResults | LTR:20M TIR:Miss LINE:94K Heli:Miss SINE:62K 
+[87] GCA_024086825.1_ASM2408682v1_genomic
+    📊35.16% | LTR:3.6M TIR:1.1M LINE:45K Heli:245K SINE:4.0K 
+[88] GCA_024500025.1_ASM2450002v1_genomic
+    📊39.67% | LTR:3.2M TIR:2.3M LINE:70K Heli:847K SINE:15K 
+[89] GCA_024500145.1_ASM2450014v1_genomic
+    📊76.43% | LTR:33M TIR:9.1M LINE:110K Heli:747K SINE:37K 
+[90] GCA_024626585.2_ASM2462658v2_genomic
+    📊NoResults | LTR:Miss TIR:1.9M LINE:161K Heli:124K SINE:39K 
+[91] GCA_024713555.1_Salk_sp9512.v2_genomic
+    📊15.44% | LTR:611K TIR:471K LINE:28K(Small) Heli:190K SINE:462(Small) 
+[92] GCA_025175895.1_ASM2517589v1_genomic
+    📊NoResults | LTR:19M TIR:Miss LINE:20K(Small) Heli:Miss SINE:118K 
+[93] GCA_025413875.1_RHMOLv1_genomic
+    📊56.48% | LTR:16M TIR:11M LINE:133K Heli:843K SINE:30K 
+[94] GCA_026008535.1_Pfru_yukari_1.0_genomic
+    📊63.91% | LTR:25M TIR:9.6M LINE:42K Heli:2.2M SINE:128K 
+[95] GCA_026214975.1_ASM2621497v1_genomic
+    📊NoResults | LTR:33M TIR:Miss LINE:128K Heli:Miss SINE:39K 
+[96] GCA_026413185.1_ASM2641318v1_genomic
+    📊52.46% | LTR:9.3M TIR:8.7M LINE:169K Heli:2.0M SINE:36K 
+[97] GCA_027726005.1_MPIPZ_junEff1m_1_genomic
+    📊37.56% | LTR:1.3M TIR:1.6M LINE:92K Heli:1.1M SINE:8.1K 
+[98] GCA_028052125.1_Melaze_AO_1.1_genomic
+    📊19.87% | LTR:1.6M TIR:721K LINE:26K(Small) Heli:156K SINE:3.1K 
+[99] GCA_028654395.1_ASM2865439v1_genomic
+    📊46.03% | LTR:5.0M TIR:1.8M LINE:38K Heli:735K SINE:7.1K 
+[100] GCA_029339355.1_CS_assembly_2_genomic
+    📊NoResults | LTR:Miss TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[101] GCA_029490685.1_ASM2949068v1_genomic
+    📊66.84% | LTR:10M TIR:12M LINE:56K Heli:842K SINE:35K 
+[102] GCA_029582165.1_ASM2958216v1_genomic
+    📊63.74% | LTR:21M TIR:15M LINE:179K Heli:911K SINE:53K 
+[103] GCA_030159175.1_Glur_r1.0_genomic
+    📊NoResults | LTR:4.6M TIR:5.6M LINE:78K Heli:1.8M SINE:28K 
+[104] GCA_030347555.1_ILRI_Lpur_genomic
+    📊NoResults | LTR:2.7M TIR:1.7M LINE:48K Heli:260K SINE:3.5K 
+[105] GCA_030449075.1_ASM3044907v1_genomic
+    📊21.13% | LTR:1.2M TIR:1.4M LINE:46K Heli:147K SINE:6.0K 
+[106] GCA_030549775.1_ASM3054977v1_genomic
+    📊66.29% | LTR:5.1M TIR:6.4M LINE:135K Heli:404K SINE:43K 
+[107] GCA_030664755.1_ASM3066475v1_genomic
+    📊53.83% | LTR:7.1M TIR:2.8M LINE:83K Heli:1.6M SINE:20K 
+[108] GCA_030737845.1_ASM3073784v1_genomic
+    📊45.49% | LTR:5.6M TIR:7.2M LINE:116K Heli:639K SINE:23K 
+[109] GCA_030762865.1_ASM3076286v1_genomic
+    📊61.33% | LTR:7.2M TIR:3.7M LINE:76K Heli:1.3M SINE:22K 
+[110] GCA_030762895.1_ZD_Sfla_1.0_genomic
+    📊NoResults | LTR:24M TIR:Miss LINE:111K Heli:Miss SINE:72K 
+[111] GCA_032362305.1_ASM3236230v1_genomic
+    📊NoResults | LTR:9.7K(Small) TIR:18K(Small) LINE:110K Heli:1.4K(Small) SINE:8.8K 
+[112] GCA_032619315.1_KAU_P.longum_genomic
+    📊36.95% | LTR:342K(Small) TIR:1.1M LINE:27K(Small) Heli:162K SINE:6.6K 
+[113] GCA_032719365.1_ASM3271936v1_genomic
+    📊75.51% | LTR:15M TIR:4.9M LINE:56K Heli:910K SINE:27K 
+[114] GCA_033030585.1_KIB_Fhip_1.0_genomic
+    📊50.97% | LTR:3.0M TIR:1.7M LINE:95K Heli:244K SINE:23K 
+[115] GCA_033807775.1_ASM3380777v1_genomic
+    📊NoResults | LTR:41M TIR:Miss LINE:40K Heli:Miss SINE:109K 
+[116] GCA_034093135.1_ASM3409313v1_genomic
+    📊NoResults | LTR:24M TIR:Miss LINE:52K Heli:Miss SINE:104K 
+[117] GCA_035235625.1_ASM3523562v1_genomic
+    📊55.72% | LTR:2.9M TIR:5.1M LINE:58K Heli:166K SINE:13K 
+[118] GCA_035771175.1_ASM3577117v1_genomic
+    📊NoResults | LTR:5.9M TIR:Miss LINE:156K Heli:Miss SINE:86K 
+[119] GCA_036169575.1_PB533_SCSK_HAP2_genomic
+    📊NoResults | LTR:4.5M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[120] GCA_036245055.1_ASM3624505v1_genomic
+    📊NoResults | LTR:15M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[121] GCA_036785695.1_ASM3678569v1_genomic
+    📊NoResults | LTR:30M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[122] GCA_036897175.1_ASM3689717v1_genomic
+    📊NoResults | LTR:15K(Small) TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[123] GCA_036898165.1_MJU_Smar_1.0_genomic
+    📊NoResults | LTR:14M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[124] GCA_037043215.1_ASM3704321v1_genomic
+    📊NoResults | LTR:11M TIR:Miss LINE:253K Heli:Miss SINE:88K 
+[125] GCA_037074505.1_ASM3707450v1_genomic
+    📊NoResults | LTR:Miss TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[126] GCA_037074535.1_ASM3707453v1_genomic
+    📊NoResults | LTR:8.6M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+[127] GCA_037074585.1_ASM3707458v1_genomic
+    📊54.86% | LTR:7.0M TIR:3.3M LINE:75K Heli:332K SINE:28K 
+[128] GCA_037113545.1_ASM3711354v1_genomic
+    📊33.08% | LTR:2.1M TIR:983K LINE:83K Heli:106K SINE:7.6K 
+[129] GCA_037127255.1_ASM3712725v1_genomic
+    📊NoResults | LTR:27M TIR:Miss LINE:149K Heli:Miss SINE:52K 
+[130] GCA_001633085.1_Safflower1_genomic
+    📊NoResults | LTR:491K(Small) TIR:1.8M LINE:60K Heli:111K SINE:75K 
+[131] GCA_002013955.2_C_medica_denovo_2_genomic
+    📊39.98% | LTR:3.9M TIR:2.1M LINE:116K Heli:193K SINE:26K 
+[132] GCA_003024785.1_ASM302478v1_genomic
+    📊44.15% | LTR:1.3M TIR:1.1M LINE:24K(Small) Heli:63K SINE:853 
+[133] GCA_003724115.2_FoenVul1.1_genomic
+    📊NoResults | LTR:1.6M TIR:6.1M LINE:73K Heli:570K SINE:45K 
+[134] GCA_004329165.1_ASM432916v1_genomic
+    📊45.88% | LTR:4.7M TIR:4.9M LINE:92K Heli:818K SINE:46K 
+[135] GCA_005392925.1_SCBG_Asin_1.0_genomic
+    📊60.83% | LTR:4.6M TIR:7.2M LINE:153K Heli:639K SINE:18K 
+[136] GCA_005771605.1_ASM577160v1_genomic
+    📊49.22% | LTR:6.1M TIR:5.2M LINE:26K(Small) Heli:955K SINE:7.4K 
+[137] GCA_008642245.2_Bs_v2_genomic -> ⏳ Running... (Skipped)
+[138] GCA_009758035.1_Adlay_draft_genome_1.0_genomic -> ⏳ Running... (Skipped)
+[139] GCA_010577795.1_ASM1057779v1_genomic
+    📊47.06% | LTR:7.3M TIR:3.2M LINE:112K Heli:1.4M SINE:19K 
+[140] GCA_012274485.2_S.alba_v1_genomic
+    📊NoResults | LTR:5.5M TIR:3.4M LINE:83K Heli:781K SINE:16K 
+[141] GCA_012979155.1_hypericum.10X.300bp_genomic
+    📊NoResults | LTR:5.1M TIR:Miss LINE:96K Heli:Miss SINE:19K 
+[142] GCA_015680905.1_ASM1568090v1_genomic
+    📊NoResults | LTR:18M TIR:Miss LINE:Miss Heli:Miss SINE:Miss 
+----------------------------------------------------------------
+Audit Complete! Scanned: 142
+Passed : 63 -> Saved to edta_passed_list.txt
+Failed : 76 -> Saved to edta_failed_list.txt
