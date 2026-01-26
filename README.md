@@ -66,25 +66,30 @@ graph LR
 
 To ensure the reliability of the QC metrics, we validated EDTA-Audit using both synthetic datasets and real-world genomes.
 
-### 1. Synthetic Benchmarking
-A script (`generate_validation_set.sh`) is provided to generate synthetic datasets representing "Pass" and "Fail" scenarios across three taxonomic kingdoms.
+## 📊 Benchmarking & Validation
 
-**To reproduce the benchmark:**
+The framework was rigorously benchmarked against **13 public plant genome assemblies** (NCBI RefSeq/GenBank) spanning diverse quality levels. 
 
-```bash
-# Generate synthetic datasets (C1-C9)
-bash generate_validation_set.sh
+EDTA-Audit successfully distinguished high-quality assemblies from those with anomalously low LINE content (<30 KB), demonstrating higher specificity than generic file existence checks.
 
-# Run Audit in Plant Mode
-./edta_audit.sh -d validation_dataset -t plant
+### 🏆 Key Results
+| Accession | Species | Total TE (%) | LTR Size | LINE Size | Audit Result |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **GCF_001879475.1** | *Ipomoea nil* | 61.28% | 16 MB | 102 KB | ✅ **PASS** |
+| **GCF_048772165.1** | *Typha angustifolia* | 26.20% | 793 KB | 53 KB | ✅ **PASS** |
+| **GCF_019578655.1** | *Ricinus communis* | 40.46% | 3.1 MB | 22 KB | ❌ **FAIL (Low LINEs)** |
+| **GCF_009805555.1** | *Andrographis paniculata* | 38.27% | 2.9 MB | 27 KB | ❌ **FAIL (Low LINEs)** |
+*(See the full list of 13 genomes in `benchmarking/accession_ids.txt`)*
 
-# Expected Result: 
-# Correctly passes Plant data (C1). 
-# Rejects Animal (C4) and Fungi (C9) profiles due to insufficient TE content.
-```
+### 🔄 How to Reproduce
+You can reproduce these results by downloading the exact datasets used in our paper:
 
-### 2. Real-World Validation
-The framework was benchmarked against 13 public plant genome assemblies (NCBI RefSeq). It successfully distinguished high-quality assemblies from those with anomalously low LINE content (<30 KB), demonstrating higher specificity than generic file checks.
+1. **Download the Accession List:**
+   The full list of IDs is provided in this repository: [benchmarking/accession_ids.txt](benchmarking/accession_ids.txt)
+
+2. **Fetch Data (using NCBI Datasets):**
+   ```bash
+   datasets download genome accession --inputfile benchmarking/accession_ids.txt --include genome
 
 ## Installation
 
@@ -142,6 +147,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 2. Sotero-Caio, C. G., Platt, R. N., II, Suh, A. & Ray, D. A. **Evolution and Diversity of Transposable Elements in Vertebrate Genomes.** *Genome Biology and Evolution* 9, 161-177, doi:10.1093/gbe/evw264 (2017).
 3. Castanera, R. et al. **Transposable Elements versus the Fungal Genome: Impact on Whole-Genome Architecture and Transcriptional Profiles.** *PLOS Genetics* 12, e1006108, doi:10.1371/journal.pgen.1006108 (2016).
 4. Zhang, G. et al. **Comparative genomics reveals insights into avian genome evolution and adaptation.** *Science* 346, 1311-1320, doi:10.1126/science.1251385 (2014).
+
 
 
 
