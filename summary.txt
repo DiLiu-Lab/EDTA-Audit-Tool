@@ -1,0 +1,33 @@
+EDTA-Audit summary
+Generated: 2026-02-08 08:35:10
+Profile: plant
+
+Counts
+  TOTAL	153
+  OVERALL_PASS	81
+  OVERALL_SUSPECT	2
+  OVERALL_FAIL	70
+  TECH_PASS	104
+  TECH_FAIL	49
+  BIO_PASS	81
+  BIO_SUSPECT	2
+  BIO_FAIL	21
+  BIO_NA	49
+
+FAIL reason tags (TECH_* + HARD_FAIL_*)
+  TECH_MISSING_TEanno.sum	49
+  TECH_MISSING_TEanno.gff3	49
+  TECH_MISSING_EDTA.anno/	49
+  TECH_MISSING_TElib.fa	44
+  HARD_FAIL_LTR_TOTAL	21
+  HARD_FAIL_TOTAL_TE	20
+  HARD_FAIL_TIR	20
+
+SUSPECT reason tags (HARD_SUSPECT_*)
+  HARD_SUSPECT_TOTAL_TE	2
+
+TECH missing breakdown
+  TEanno.sum	49
+  TEanno.gff3	49
+  EDTA.anno/	49
+  TElib.fa	44
