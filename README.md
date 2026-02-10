@@ -122,7 +122,7 @@ chmod +x edta_audit.py
 [2026-02-08 08:43:11] Total samples: 153 | PASS: 81 | SUSPECT: 2 | FAIL: 70
 ```
 
-### Aggregated summary [`summary.txt`](benchmarking/summary.txt)
+### Aggregated summary (`summary.txt`)
 ```text
 Counts
   TOTAL	153
@@ -142,7 +142,7 @@ Counts
 - **TECH_FAIL** (missing/empty required outputs): 49 / 153 (**32.0%**) → `bio_status=NA`  
 - Among **technical PASS** samples (104), **BIO_FAIL** = 21 (**20.2% of TECH_PASS**)
 
-Most frequent failure drivers (from `summary.txt`):
+Most frequent failure drivers [from `summary.txt`](benchmarking/summary.txt):
 ```text
 FAIL reason tags (TECH_* + HARD_FAIL_*)
   TECH_MISSING_TEanno.sum	49
@@ -336,6 +336,7 @@ GitHub: DiLiu-Lab
 - **[R8]** Chang, N.-C., Rovira, Q., Wells, J. N., & Feschotte, C. (2022). *Zebrafish transposable elements show extensive diversification in age, genomic distribution, and developmental expression.* **Genome Research**, 32(7), 1408–1423. https://doi.org/10.1101/gr.275655.121  
 - **[R9]** Abraham, L. N., Oggenfuss, U., & Croll, D. (2024). *Population-level transposable element expression dynamics influence trait evolution in a fungal crop pathogen.* **mBio**, 15(3), e02840-23. https://doi.org/10.1128/mbio.02840-23  
 - **[R10]** Romeijn, J., Bañales, I., Seidl, M. F., et al. (2025). *Extensive horizontal transfer of transposable elements shapes fungal mobilomes.* **Current Biology**. https://doi.org/10.1016/j.cub.2025.11.012  
+
 
 
 
