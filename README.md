@@ -89,6 +89,19 @@ All outputs are written under `--out` (default: `audit_out/`):
 - `fail.tsv` — overall FAIL (includes technical failures)
 - `summary.txt` — aggregated counts + most common diagnostic tags
 
+## Example Output Structure
+
+These files were generated using publicly available genome assemblies
+listed in [`benchmarking`](benchmarking).
+
+They demonstrate the full range of possible audit outcomes,
+including PASS, SUSPECT, FAIL, and TECH_FAIL classifications.
+- [`all.tsv`](benchmarking/all.tsv)
+- [`pass.tsv`](benchmarking/pass.tsv)
+- [`suspect.tsv`](benchmarking/suspect.tsv)
+- [`fail.tsv`](benchmarking/fail.tsv)
+- [`summary.txt`](benchmarking/summary.txt)
+
 ### TSV schema (columns)
 The TSV files are tab-delimited and include:
 
@@ -336,6 +349,7 @@ GitHub: DiLiu-Lab
 - **[R8]** Chang, N.-C., Rovira, Q., Wells, J. N., & Feschotte, C. (2022). *Zebrafish transposable elements show extensive diversification in age, genomic distribution, and developmental expression.* **Genome Research**, 32(7), 1408–1423. https://doi.org/10.1101/gr.275655.121  
 - **[R9]** Abraham, L. N., Oggenfuss, U., & Croll, D. (2024). *Population-level transposable element expression dynamics influence trait evolution in a fungal crop pathogen.* **mBio**, 15(3), e02840-23. https://doi.org/10.1128/mbio.02840-23  
 - **[R10]** Romeijn, J., Bañales, I., Seidl, M. F., et al. (2025). *Extensive horizontal transfer of transposable elements shapes fungal mobilomes.* **Current Biology**. https://doi.org/10.1016/j.cub.2025.11.012  
+
 
 
 
