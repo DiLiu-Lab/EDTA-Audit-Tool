@@ -135,6 +135,8 @@ chmod +x edta_audit.py
 [2026-02-08 08:43:11] Total samples: 153 | PASS: 81 | SUSPECT: 2 | FAIL: 70
 ```
 
+![EDTA-Audit demo](benchmarking/demo.png)
+
 ### Aggregated summary [`summary.txt`](benchmarking/summary.txt)
 ```text
 Counts
@@ -349,6 +351,7 @@ GitHub: DiLiu-Lab
 - **[R8]** Chang, N.-C., Rovira, Q., Wells, J. N., & Feschotte, C. (2022). *Zebrafish transposable elements show extensive diversification in age, genomic distribution, and developmental expression.* **Genome Research**, 32(7), 1408–1423. https://doi.org/10.1101/gr.275655.121  
 - **[R9]** Abraham, L. N., Oggenfuss, U., & Croll, D. (2024). *Population-level transposable element expression dynamics influence trait evolution in a fungal crop pathogen.* **mBio**, 15(3), e02840-23. https://doi.org/10.1128/mbio.02840-23  
 - **[R10]** Romeijn, J., Bañales, I., Seidl, M. F., et al. (2025). *Extensive horizontal transfer of transposable elements shapes fungal mobilomes.* **Current Biology**. https://doi.org/10.1016/j.cub.2025.11.012  
+
 
 
 
