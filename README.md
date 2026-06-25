@@ -20,7 +20,7 @@ EDTA-Audit v1.0.0 is the original Bash implementation. It classifies audited EDT
 
 EDTA-Audit v2.0.0 is a Python-based refactoring released after v1.0.0. Compared with v1.0.0, v2.0.0 introduces expanded tabular outputs (`all.tsv`, `pass.tsv`, `suspect.tsv`, `fail.tsv`, and `summary.txt`) and a new `SUSPECT` output category for intermediate warning cases.
 
-Users who wish to reproduce analyses performed with the original Bash implementation should use the v1.0.0 release/tag. Users who prefer the updated reporting format should use v2.0.0.
+The `main` branch describes the current v2.0.0 implementation. Users who wish to reproduce analyses performed with the original Bash implementation should use the v1.0.0 release/tag. Users who prefer the updated reporting format should use v2.0.0.
 
 ## Required EDTA option
 
